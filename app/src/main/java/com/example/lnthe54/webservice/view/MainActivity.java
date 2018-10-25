@@ -1,7 +1,11 @@
 package com.example.lnthe54.webservice.view;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,14 +37,44 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.CallB
     private ArrayList<Food> listFood;
     private FloatingActionButton btnAdd;
 
+    private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.INTERNET};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (!checkPermissions()) {
+            return;
+        }
+
         initViews();
         ReadJSON("http://192.168.1.160/androidwebservice/demogetdatafood.php");
         addEvent();
+    }
+
+    private boolean checkPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (String check : permissions) {
+                int status = checkSelfPermission(check);
+                if (status == PackageManager.PERMISSION_DENIED) {
+                    requestPermissions(permissions, 0);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (checkPermissions()) {
+            initViews();
+        } else {
+            finish();
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void initViews() {
