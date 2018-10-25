@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Web Service</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="tv_name">Tên món *</string>
+    <string name="tv_image">Hình ảnh *</string>
+    <string name="tv_price">Giá *</string>
+    <string name="tv_address">Địa chỉ *</string>
+    <string name="tv_description">Mô tả *</string>
+    <string name="btn_post">Đăng Bài</string>
+    <string name="gallery">Thư Viện</string>
+    <string name="camera">Camera</string>
+    <string name="tv_area">Khu vực *</string>
+</resources>
